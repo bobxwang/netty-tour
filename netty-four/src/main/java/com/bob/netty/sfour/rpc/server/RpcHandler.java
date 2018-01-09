@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
 import net.sf.cglib.reflect.FastClass;
 import net.sf.cglib.reflect.FastMethod;
 import org.slf4j.Logger;
@@ -48,7 +50,7 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, final RpcRequest msg) throws Exception {
+    protected void channelRead0(final ChannelHandlerContext ctx, final RpcRequest msg) throws Exception {
 
         String host = ctx.channel().remoteAddress().toString();
         System.out.println(ColorUtil.BLUE + "client address is -> " + host + " handler receive -> " + objectMapper.writeValueAsString(msg) + ColorUtil.RESET);
@@ -75,12 +77,13 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
         } finally {
             final String color = response.isError() ? ColorUtil.RED : ColorUtil.BLUE;
             System.out.println(color + "handler result -> " + objectMapper.writeValueAsString(response) + ColorUtil.RESET);
-            ctx.writeAndFlush(response).addListener(
-                    (ChannelFuture channelFuture) -> {
-                        System.out.println(color + "Send response for request -> " + msg.getRequestId() + ColorUtil.RESET);
-                        ctx.close();
-                    }
-            );
+            ctx.writeAndFlush(response).addListener(new GenericFutureListener<Future<? super Void>>() {
+                @Override
+                public void operationComplete(Future<? super Void> future) throws Exception {
+                    System.out.println(color + "Send response for request -> " + msg.getRequestId() + ColorUtil.RESET);
+                    ctx.close();
+                }
+            });
         }
     }
 }
