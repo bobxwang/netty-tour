@@ -1,6 +1,7 @@
 package com.bob.netty.sfour.rpc.core;
 
 import com.bob.netty.utils.ProtostuffUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -35,16 +36,13 @@ public class RpcEncoder extends MessageToByteEncoder {
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
 
+        String jmsg = "";
         try {
-            logger.info("encoder " + msg + "--" + this.clasz.getName());
-            try {
-                logger.info(msg + " -- " + objectMapper.writeValueAsString(msg));
-            } catch (Exception e) {
-                logger.info("encoder fastxml error " + e.getMessage());
-            }
-        } catch (Exception ee) {
+            jmsg = objectMapper.writeValueAsString(msg);
+        } catch (JsonProcessingException ee) {
             logger.error(ee.getMessage(), ee);
         }
+        logger.info("encoder --" + this.clasz.getName() + " -- msg -- " + jmsg);
 
         if (clasz.isInstance(msg)) {
             byte[] data = ProtostuffUtil.serialize(msg);

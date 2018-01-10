@@ -57,6 +57,10 @@ public class CGlibRpcProxy implements MethodInterceptor {
         request.setMethodName(method.getName());
         request.setParameterTypes(method.getParameterTypes());
         request.setParameters(objects);
+        /**
+         * 这里每次调用的send时候才去和服务端建立连接，
+         * 使用的是短连接，这种短连接在高并发时会有连接数问题，也会影响性能
+         */
         RpcClient client = new RpcClient(host, port);
         RpcResponse response = client.send(request, 5);
         if (response == null) {

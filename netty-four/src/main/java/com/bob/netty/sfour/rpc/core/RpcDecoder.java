@@ -1,6 +1,7 @@
 package com.bob.netty.sfour.rpc.core;
 
 import com.bob.netty.utils.ProtostuffUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -18,7 +19,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
 
     private Class<?> clasz;
 
-//    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     public RpcDecoder(Class<?> clasz) {
         this.clasz = clasz;
@@ -44,11 +45,11 @@ public class RpcDecoder extends ByteToMessageDecoder {
 
         Object obj = ProtostuffUtil.deserialize(data, clasz);
 
-//        try {
-//            logger.info("receive -- " + objectMapper.writeValueAsString(obj));
-//        } catch (Exception e) {
-//            logger.error("fastxml to serialize has error " + e.getMessage(), e);
-//        }
+        try {
+            logger.info("receive -- " + objectMapper.writeValueAsString(obj));
+        } catch (Exception e) {
+            logger.error("fastxml to serialize has error " + e.getMessage(), e);
+        }
 
         out.add(obj);
     }
