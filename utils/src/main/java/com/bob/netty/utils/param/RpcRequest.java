@@ -9,6 +9,7 @@ public class RpcRequest {
     private String className;
     private String methodName;
     private Class<?>[] parameterTypes;
+    private Object[] parameters;
 
     public String getRequestId() {
         return requestId;
@@ -49,6 +50,4 @@ public class RpcRequest {
     public void setParameters(Object[] parameters) {
         this.parameters = parameters;
     }
-
-    private Object[] parameters;
 }

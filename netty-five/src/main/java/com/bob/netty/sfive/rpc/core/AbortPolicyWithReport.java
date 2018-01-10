@@ -1,5 +1,8 @@
 package com.bob.netty.sfive.rpc.core;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -7,6 +10,8 @@ import java.util.concurrent.ThreadPoolExecutor;
  * Created by bob on 16/7/20.
  */
 public class AbortPolicyWithReport extends ThreadPoolExecutor.AbortPolicy {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbortPolicyWithReport.class);
 
     private final String threadName;
 
@@ -28,7 +33,7 @@ public class AbortPolicyWithReport extends ThreadPoolExecutor.AbortPolicy {
                         + " Executor status:(isShutdown:%s, isTerminated:%s, isTerminating:%s)]",
                 threadName, e.getPoolSize(), e.getActiveCount(), e.getCorePoolSize(), e.getMaximumPoolSize(), e.getLargestPoolSize(),
                 e.getTaskCount(), e.getCompletedTaskCount(), e.isShutdown(), e.isTerminated(), e.isTerminating());
-        System.out.println(msg);
+        LOGGER.info(msg);
         throw new RejectedExecutionException(msg);
     }
 }

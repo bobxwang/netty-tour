@@ -60,7 +60,7 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
 
         countDownLatch.countDown();
 
-        System.out.println(Thread.currentThread().getName() + "channelRead0");
+        LOGGER.info(Thread.currentThread().getName() + "channelRead0");
     }
 
     /**
@@ -94,7 +94,6 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
 //                lock.lock();
 
             channel.writeAndFlush(request).sync();
-            System.out.println(Thread.currentThread().getName() + "send");
 
             // 设定下超时时间,10秒
 //                condition.await(10 * 1000, TimeUnit.MILLISECONDS);

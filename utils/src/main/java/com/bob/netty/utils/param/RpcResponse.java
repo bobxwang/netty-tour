@@ -5,6 +5,10 @@ package com.bob.netty.utils.param;
  */
 public class RpcResponse {
 
+    private String requestId;
+    private Throwable error;
+    private Object result;
+
     public String getRequestId() {
         return requestId;
     }
@@ -32,9 +36,4 @@ public class RpcResponse {
     public void setResult(Object result) {
         this.result = result;
     }
-
-    private String requestId;
-    private Throwable error;
-    private Object result;
-
 }

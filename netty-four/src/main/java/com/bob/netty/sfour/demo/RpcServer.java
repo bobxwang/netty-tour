@@ -15,6 +15,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +25,8 @@ import java.util.Map;
  * Created by bob on 16/7/16.
  */
 public class RpcServer {
+
+    private static final Logger logger = LoggerFactory.getLogger(RpcServer.class);
 
     public static void main(String[] args) {
 
@@ -51,12 +55,12 @@ public class RpcServer {
                     .option(ChannelOption.SO_BACKLOG, 128)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture channelFuture = bootstrap.bind("127.0.0.1", 8080).sync();
-            System.out.println("service is started and listen on port 8080");
+            logger.info("service is started and listen on port 8080");
             channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            System.out.println("service want to stop self");
+            logger.info("service want to stop self");
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }

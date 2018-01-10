@@ -4,6 +4,8 @@ import com.bob.netty.utils.ProtostuffUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -11,6 +13,8 @@ import java.util.List;
  * Created by bob on 16/7/15.
  */
 public class RpcDecoder extends ByteToMessageDecoder {
+
+    private final Logger logger = LoggerFactory.getLogger(RpcDecoder.class);
 
     private Class<?> clasz;
 
@@ -41,9 +45,9 @@ public class RpcDecoder extends ByteToMessageDecoder {
         Object obj = ProtostuffUtil.deserialize(data, clasz);
 
 //        try {
-//            System.out.println("receive -- " + objectMapper.writeValueAsString(obj));
+//            logger.info("receive -- " + objectMapper.writeValueAsString(obj));
 //        } catch (Exception e) {
-//            System.out.println("fastxml to serialize has error " + e.getMessage());
+//            logger.error("fastxml to serialize has error " + e.getMessage(), e);
 //        }
 
         out.add(obj);

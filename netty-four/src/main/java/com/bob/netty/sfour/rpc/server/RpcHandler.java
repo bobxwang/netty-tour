@@ -33,18 +33,18 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
-        System.out.println(ColorUtil.BLUE + "active" + ColorUtil.RESET);
+        LOGGER.info(ColorUtil.BLUE + "active" + ColorUtil.RESET);
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
-        System.out.println(ColorUtil.BLUE + "inactive" + ColorUtil.RESET);
+        LOGGER.info(ColorUtil.BLUE + "inactive" + ColorUtil.RESET);
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        LOGGER.error("server caught exception", cause);
+        LOGGER.error(ColorUtil.RED + "server caught exception" + ColorUtil.RESET, cause);
         super.exceptionCaught(ctx, cause);
         ctx.close();
     }
@@ -53,7 +53,7 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
     protected void channelRead0(final ChannelHandlerContext ctx, final RpcRequest msg) throws Exception {
 
         String host = ctx.channel().remoteAddress().toString();
-        System.out.println(ColorUtil.BLUE + "client address is -> " + host + " handler receive -> " + objectMapper.writeValueAsString(msg) + ColorUtil.RESET);
+        LOGGER.info(ColorUtil.BLUE + "client address is -> " + host + " handler receive -> " + objectMapper.writeValueAsString(msg) + ColorUtil.RESET);
 
         RpcResponse response = new RpcResponse();
         response.setRequestId(msg.getRequestId());
@@ -76,11 +76,11 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
             response.setError(e);
         } finally {
             final String color = response.isError() ? ColorUtil.RED : ColorUtil.BLUE;
-            System.out.println(color + "handler result -> " + objectMapper.writeValueAsString(response) + ColorUtil.RESET);
+            LOGGER.info(color + "handler result -> " + objectMapper.writeValueAsString(response) + ColorUtil.RESET);
             ctx.writeAndFlush(response).addListener(new GenericFutureListener<Future<? super Void>>() {
                 @Override
                 public void operationComplete(Future<? super Void> future) throws Exception {
-                    System.out.println(color + "Send response for request -> " + msg.getRequestId() + ColorUtil.RESET);
+                    LOGGER.info(color + "Send response for request -> " + msg.getRequestId() + ColorUtil.RESET);
                     ctx.close();
                 }
             });

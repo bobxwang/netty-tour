@@ -5,11 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by bob on 16/7/15.
  */
 public class RpcEncoder extends MessageToByteEncoder {
+
+    private final Logger logger = LoggerFactory.getLogger(RpcEncoder.class);
 
     private Class<?> clasz;
 
@@ -23,7 +27,7 @@ public class RpcEncoder extends MessageToByteEncoder {
     public boolean acceptOutboundMessage(Object msg) throws Exception {
         boolean a = super.acceptOutboundMessage(msg);
 
-//        System.out.println("acceptOutboundMessage result is " + a + " and input is " + msg);
+//      logger.info("acceptOutboundMessage result is " + a + " and input is " + msg);
 
         return a;
     }
@@ -32,14 +36,14 @@ public class RpcEncoder extends MessageToByteEncoder {
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
 
         try {
-            System.out.println("encoder " + msg + "--" + this.clasz.getName());
+            logger.info("encoder " + msg + "--" + this.clasz.getName());
             try {
-                System.out.println(msg + " -- " + objectMapper.writeValueAsString(msg));
+                logger.info(msg + " -- " + objectMapper.writeValueAsString(msg));
             } catch (Exception e) {
-                System.out.println("encoder fastxml error " + e.getMessage());
+                logger.info("encoder fastxml error " + e.getMessage());
             }
         } catch (Exception ee) {
-            System.out.println(ee.getMessage());
+            logger.error(ee.getMessage(), ee);
         }
 
         if (clasz.isInstance(msg)) {
@@ -47,7 +51,7 @@ public class RpcEncoder extends MessageToByteEncoder {
             out.writeInt(data.length);
             out.writeBytes(data);
         } else {
-            System.out.println("不是期待的class");
+            logger.error("不是期待的class");
         }
     }
 }
