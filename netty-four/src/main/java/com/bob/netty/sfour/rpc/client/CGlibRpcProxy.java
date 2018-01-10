@@ -1,6 +1,6 @@
 package com.bob.netty.sfour.rpc.client;
 
-import com.bob.netty.sfour.rpc.server.RpcResponse;
+import com.bob.netty.utils.param.RpcResponse;
 import com.bob.netty.utils.param.RpcRequest;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;

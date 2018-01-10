@@ -1,4 +1,4 @@
-package com.bob.netty.sfour.rpc.server;
+package com.bob.netty.utils.param;
 
 /**
  * Created by bob on 16/7/15.
