@@ -22,3 +22,7 @@
 * 接收发送ByteBuffer均采用Direct Buffers，使用堆外直接内存进行Socket读写，不需字节缓冲区的二次拷贝
 * 提供可组合的Buffer对象，可聚合多个ByteBuffer对象
 * 文件传输采用transferTo方法，直接将文件缓冲区数据发送到目标Channel
+
+#### Utils Project
+* ColorUtil 打印带颜色的字符串
+* ProtostuffUtil Protostuff序列化反序列化工具类
