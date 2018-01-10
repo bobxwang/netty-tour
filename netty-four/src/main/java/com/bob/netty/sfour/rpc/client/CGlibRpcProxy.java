@@ -1,5 +1,8 @@
 package com.bob.netty.sfour.rpc.client;
 
+import com.bob.netty.sfour.rpc.client.async.AsyncRpcClient;
+import com.bob.netty.sfour.rpc.client.async.ConnectManage;
+import com.bob.netty.sfour.rpc.core.async.RpcFuture;
 import com.bob.netty.utils.param.RpcResponse;
 import com.bob.netty.utils.param.RpcRequest;
 import net.sf.cglib.proxy.Enhancer;
@@ -57,6 +60,20 @@ public class CGlibRpcProxy implements MethodInterceptor {
         request.setMethodName(method.getName());
         request.setParameterTypes(method.getParameterTypes());
         request.setParameters(objects);
+
+        AsyncRpcClient asyncRpcClient = ConnectManage.getInstance().chooseAsyncRpcClient();
+        RpcFuture rpcFuture = asyncRpcClient.send(request);
+        return rpcFuture.get();
+    }
+
+    /**
+     * 同步调用
+     *
+     * @param request
+     * @return
+     * @throws Throwable
+     */
+    private Object runSync(RpcRequest request) throws Throwable {
         /**
          * 这里每次调用的send时候才去和服务端建立连接，
          * 使用的是短连接，这种短连接在高并发时会有连接数问题，也会影响性能

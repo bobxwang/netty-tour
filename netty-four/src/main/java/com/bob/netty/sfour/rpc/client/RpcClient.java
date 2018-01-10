@@ -79,7 +79,9 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
                         public void initChannel(SocketChannel channel) throws Exception {
                             channel.pipeline()
                                     .addLast(new LengthFieldBasedFrameDecoder(65536, 0, 4, 0, 0))
+                                    // 将 RPC 请求进行编码（为了发送请求）
                                     .addLast(new RpcEncoder(RpcRequest.class))
+                                    // 将 RPC 响应进行解码（为了处理响应）
                                     .addLast(new RpcDecoder(RpcResponse.class))
                                     .addLast(RpcClient.this);
                         }

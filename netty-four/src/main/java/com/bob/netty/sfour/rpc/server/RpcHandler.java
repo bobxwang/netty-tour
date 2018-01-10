@@ -33,19 +33,7 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
     public RpcHandler(Map<String, Object> handlerMap) {
         this.handlerMap = handlerMap;
-        this.executorService = Executors.newFixedThreadPool(16);
-    }
-
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        super.channelActive(ctx);
-        LOGGER.info(ColorUtil.BLUE + "active" + ColorUtil.RESET);
-    }
-
-    @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        super.channelInactive(ctx);
-        LOGGER.info(ColorUtil.BLUE + "inactive" + ColorUtil.RESET);
+        this.executorService = Executors.newSingleThreadExecutor();
     }
 
     @Override
