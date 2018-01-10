@@ -1,11 +1,11 @@
 package com.bob.netty.sfour.demo;
 
 import com.bob.netty.sfour.demo.service.CalculatorServiceImpl;
-import com.bob.netty.sfour.rpc.client.RpcRequest;
 import com.bob.netty.sfour.rpc.core.RpcDecoder;
 import com.bob.netty.sfour.rpc.core.RpcEncoder;
 import com.bob.netty.sfour.rpc.server.RpcHandler;
 import com.bob.netty.sfour.rpc.server.RpcResponse;
+import com.bob.netty.utils.param.RpcRequest;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

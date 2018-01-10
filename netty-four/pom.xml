@@ -13,21 +13,26 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>bob-netty-tour</groupId>
+            <artifactId>utils</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>io.netty</groupId>-->
             <!--<artifactId>netty-buffer</artifactId>-->
-            <!--<version>4.0.25.Final</version>-->
+            <!--<version>4.1.19.Final</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
             <!--<groupId>io.netty</groupId>-->
             <!--<artifactId>netty-codec-http</artifactId>-->
-            <!--<version>4.0.25.Final</version>-->
+            <!--<version>4.1.19.Final</version>-->
         <!--</dependency>-->
-
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.16.Final</version>
+            <version>4.1.19.Final</version>
         </dependency>
 
         <dependency>

@@ -3,6 +3,7 @@ package com.bob.netty.sfour.rpc.client;
 import com.bob.netty.sfour.rpc.core.RpcDecoder;
 import com.bob.netty.sfour.rpc.core.RpcEncoder;
 import com.bob.netty.sfour.rpc.server.RpcResponse;
+import com.bob.netty.utils.param.RpcRequest;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;

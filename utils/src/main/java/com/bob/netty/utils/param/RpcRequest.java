@@ -1,7 +1,7 @@
-package com.bob.netty.sfour.rpc.client;
+package com.bob.netty.utils.param;
 
 /**
- * Created by bob on 16/7/15.
+ * Created by wangxiang on 16/7/15.
  */
 public class RpcRequest {
 

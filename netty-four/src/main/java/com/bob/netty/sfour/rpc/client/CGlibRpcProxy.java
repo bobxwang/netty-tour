@@ -1,6 +1,7 @@
 package com.bob.netty.sfour.rpc.client;
 
 import com.bob.netty.sfour.rpc.server.RpcResponse;
+import com.bob.netty.utils.param.RpcRequest;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -16,6 +17,9 @@ public class CGlibRpcProxy implements MethodInterceptor {
     private static class CGLibProxyHolder {
         private static CGlibRpcProxy instance = new CGlibRpcProxy();
     }
+
+    private String host = "127.0.0.1";
+    private int port = 8080;
 
     private CGlibRpcProxy() {
     }
@@ -53,8 +57,6 @@ public class CGlibRpcProxy implements MethodInterceptor {
         request.setMethodName(method.getName());
         request.setParameterTypes(method.getParameterTypes());
         request.setParameters(objects);
-        String host = "127.0.0.1";
-        int port = 8080;
         RpcClient client = new RpcClient(host, port);
         RpcResponse response = client.send(request, 5);
         if (response == null) {
