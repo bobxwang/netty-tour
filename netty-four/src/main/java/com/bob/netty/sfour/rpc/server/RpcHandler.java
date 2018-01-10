@@ -1,6 +1,6 @@
 package com.bob.netty.sfour.rpc.server;
 
-import com.bob.netty.sfour.rpc.util.ColorUtil;
+import com.bob.netty.utils.ColorUtil;
 import com.bob.netty.utils.param.RpcRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.channel.ChannelHandlerContext;

@@ -1,6 +1,6 @@
 package com.bob.netty.sfour.rpc.core;
 
-import com.bob.netty.sfour.rpc.util.SerializationUtil;
+import com.bob.netty.utils.ProtostuffUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -38,7 +38,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
         byte[] data = new byte[dataLength];
         in.readBytes(data);
 
-        Object obj = SerializationUtil.deserialize(data, clasz);
+        Object obj = ProtostuffUtil.deserialize(data, clasz);
 
 //        try {
 //            System.out.println("receive -- " + objectMapper.writeValueAsString(obj));

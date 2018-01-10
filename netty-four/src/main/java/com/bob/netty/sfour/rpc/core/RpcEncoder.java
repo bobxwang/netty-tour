@@ -1,6 +1,6 @@
 package com.bob.netty.sfour.rpc.core;
 
-import com.bob.netty.sfour.rpc.util.SerializationUtil;
+import com.bob.netty.utils.ProtostuffUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -43,7 +43,7 @@ public class RpcEncoder extends MessageToByteEncoder {
         }
 
         if (clasz.isInstance(msg)) {
-            byte[] data = SerializationUtil.serialize(msg);
+            byte[] data = ProtostuffUtil.serialize(msg);
             out.writeInt(data.length);
             out.writeBytes(data);
         } else {

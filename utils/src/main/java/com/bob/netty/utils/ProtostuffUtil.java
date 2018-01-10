@@ -1,4 +1,4 @@
-package com.bob.netty.sfour.rpc.util;
+package com.bob.netty.utils;
 
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtostuffIOUtil;
@@ -13,13 +13,13 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by bob on 16/7/15.
  */
-public class SerializationUtil {
+public class ProtostuffUtil {
 
     private static Map<Class<?>, Schema<?>> cachedSchema = new ConcurrentHashMap<>();
 
     private static Objenesis objenesis = new ObjenesisStd(true);
 
-    private SerializationUtil() {
+    private ProtostuffUtil() {
     }
 
     @SuppressWarnings("unchecked")
