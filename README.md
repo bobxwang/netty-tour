@@ -1,8 +1,10 @@
-#### Reactor
+#### Future-Listener 
 
+#### Reactor
+> 多路复用(Acceptor)/事件分发(Dispatcher)/事件处理(Handler)
 * 单线程模型，所有的I/O操作都在同一个NIO线程上面完成，使用异步非阻塞I/O
-* 多线程模型，跟单线程区别就是有一组NIO线程来处理I/O操作，一个NIO线程可同时处理N条链路，但一个链路只对应一个NIO线程
-* 主从Reactor 多线程模型
+* 多线程模型，有专门一个Acctptor线程用于监听服务端，网络IO的读写有一组NIO线程来处理，一个NIO线程可同时处理N条链路，但一个链路只对应一个NIO线程，防止并发操作 
+* 主从多线程模型，采用多个Reactor，每个Reactor在自己单独的线程里执行 
 
 #### 可定制性
 

@@ -32,14 +32,17 @@ object TimeClient {
 
   def main(args: Array[String]) {
     val (f, group) = connect(8080, "127.0.0.1")
-    (1 until 100).foreach(x => {
-      val req = "QUERY TIME\n".getBytes()
-      val firstMessage = Unpooled.buffer(req.length)
-      firstMessage.writeBytes(req)
-      f.channel().writeAndFlush(firstMessage)
-    })
-    f.channel().closeFuture().sync()
-    group.shutdownGracefully()
+    try {
+      (1 until 100).foreach(x => {
+        val req = "QUERY TIME\n".getBytes()
+        val firstMessage = Unpooled.buffer(req.length)
+        firstMessage.writeBytes(req)
+        f.channel().writeAndFlush(firstMessage)
+      })
+      f.channel().closeFuture().sync()
+    } finally {
+      group.shutdownGracefully()
+    }
   }
 }
 
