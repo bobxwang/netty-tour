@@ -6,6 +6,11 @@
 * 多线程模型，有专门一个Acctptor线程用于监听服务端，网络IO的读写有一组NIO线程来处理，一个NIO线程可同时处理N条链路，但一个链路只对应一个NIO线程，防止并发操作 
 * 主从多线程模型，采用多个Reactor，每个Reactor在自己单独的线程里执行 
 
+#### 主要类
+* NioEventLoopGroup/NioEventLoop
+* ServerBootstrap
+* ChannelPipeline
+
 #### 可定制性
 
 * 责任链模式 ChannelPipline便于业务拦截，定制扩展
