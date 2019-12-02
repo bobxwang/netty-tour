@@ -11,6 +11,42 @@
 * ServerBootstrap
 * ChannelPipeline
 
+#### 无锁化的串行设计
+
+通过串行化设计，即消息的处理尽可能在同一个线程内完成，期间避免了线程切换。
+
+#### TCP粘包/拆包解决之道
+
+- LineBasedFrameDecoder 
+
+  ```java
+  ch.pipeline().addLast(new LineBasedFrameDecoder(1024)); // 文本解码器
+  ```
+
+- FixedLengthFrameDecoder
+
+  ```java
+  ch.pipeline().addLast(new FixedLengthFrameDecoder(30));  // 定长解码器
+  ```
+
+- DelimiterBasedFrameDecoder 
+
+  ``` java
+  // 特殊分隔符解码器
+  ```
+
+- LengthFieldBasedFrameDecoder 
+
+  ``` java
+  // 基于包头不固定长度的解码器
+  ```
+
+#### 心跳机制
+
+``` java
+ch.pipeline().addLast(new IdleStateHandler(60,15,30,TimeUnit.SECONDS));
+```
+
 #### 可定制性
 
 * 责任链模式 ChannelPipline便于业务拦截，定制扩展
@@ -28,7 +64,7 @@
 
 * 接收发送ByteBuffer均采用Direct Buffers，使用堆外直接内存进行Socket读写，不需字节缓冲区的二次拷贝
 * 提供可组合的Buffer对象，可聚合多个ByteBuffer对象
-* 文件传输采用transferTo方法，直接将文件缓冲区数据发送到目标Channel
+* 文件传输类 DefaultFileRegion 采用transferTo方法，直接将文件缓冲区数据发送到目标Channel
 
 #### Utils Project
 * ColorUtil 打印带颜色的字符串
